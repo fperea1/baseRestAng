@@ -24,7 +24,7 @@ export class UsuariosService {
 
   findAllRoles(): Observable <any> {
   
-    return this.http.get<any>('roles/findAll');
+    return this.http.get<any>('roles/findForSelect');
   }
 
   findById(id: number): Observable <Usuario> {
