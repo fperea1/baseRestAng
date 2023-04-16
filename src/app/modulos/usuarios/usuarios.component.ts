@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { DatePipe } from '@angular/common';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Usuario } from './usuario';
 import { Rol } from './rol';
@@ -47,7 +48,8 @@ export class UsuariosComponent implements OnInit {
 
   filtroTablaInicial= '{"first":0,"rows":7,"sortOrder":1,"filters":{},"globalFilter":null}';
 
-  constructor(private fb: FormBuilder, private messageService: MessageService, private usuariosService: UsuariosService, private breadcrumbService: BreadcrumbService) { }
+  constructor(private fb: FormBuilder, private messageService: MessageService, private usuariosService: UsuariosService, 
+    private breadcrumbService: BreadcrumbService, private datePipe: DatePipe) { }
 
   ngOnInit(): void {
 
@@ -109,6 +111,15 @@ export class UsuariosComponent implements OnInit {
     this.first=event.first;
 
     this.last=this.first + event.rows;
+
+    if (event.filters) {
+      if (event.filters['fechaAlta']) {
+        event.filters['fechaAlta'].value = this.datePipe.transform(event.filters['fechaAlta'].value, "yyyy-MM-dd");
+      }
+      if (event.filters['fechaDesactivacion']) {
+        event.filters['fechaDesactivacion'].value = this.datePipe.transform(event.filters['fechaDesactivacion'].value,"yyyy-MM-dd");
+      }
+    }
 
     this.filtro = JSON.stringify(event);
 

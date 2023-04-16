@@ -37,7 +37,7 @@ export class UsuariosService {
     if (usuario.id == null) {
       return this.http.post('usuarios/save', usuario, {responseType: 'text'});
     } else {
-      return this.http.put('usuarios/update', usuario, {responseType: 'text'});
+      return this.http.put('usuarios/update/' + usuario.id, usuario, {responseType: 'text'});
     }
   }
 

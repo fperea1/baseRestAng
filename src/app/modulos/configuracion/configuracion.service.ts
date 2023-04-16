@@ -28,7 +28,12 @@ export class ConfiguracionService {
   }
 
   update(configuracion: Configuracion) {
-    return this.http.put('configuracion/update', configuracion, {responseType: 'text'});
+    
+	if (configuracion.id == null) {
+      return this.http.post(this.endpoint + '/save', configuracion, {responseType: 'text'});
+    } else {
+      return this.http.put(this.endpoint + '/update/' + configuracion.id, configuracion, {responseType: 'text'});
+    }
   }
 
 }

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { DatePipe } from '@angular/common';
 import { Log } from './log';
 import { LogService } from './log.service';
 import { BreadcrumbService } from '../../shared/menu/breadcrumb.service';
@@ -32,7 +33,7 @@ export class LogsComponent implements OnInit {
 
   filtroTablaInicial= '{"first":0,"rows":7,"sortOrder":1,"filters":{},"globalFilter":null}';
 
-  constructor(private logService: LogService, private breadcrumbService: BreadcrumbService) { }
+  constructor(private logService: LogService, private breadcrumbService: BreadcrumbService, private datePipe: DatePipe) { }
 
   ngOnInit(): void {
 
@@ -69,6 +70,10 @@ export class LogsComponent implements OnInit {
     this.first=event.first;
 
     this.last=this.first + event.rows;
+
+    if (event.filters && event.filters['fecha']) {
+      event.filters['fecha'].value = this.datePipe.transform(event.filters['fecha'].value, "yyyy-MM-dd");
+    }
 
     this.filtro = JSON.stringify(event);
 
